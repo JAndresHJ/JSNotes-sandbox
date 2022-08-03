@@ -22,7 +22,7 @@ const serve = (port, filename, dir, useProxy) => {
     }
     else {
         // Get the absolute path of the index.html
-        const packagePath = require.resolve('local-client/build/index.html');
+        const packagePath = require.resolve('@jsnotes-jandreshj/local-client/build/index.html');
         // We don't want the entire path just until the build directory
         // that's why we are just getting the dirname of the absolute path.
         // This way of serving the application is when the user has installed jbook
