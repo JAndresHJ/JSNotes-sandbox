@@ -10,6 +10,7 @@ const path_1 = __importDefault(require("path"));
 const cells_1 = require("./routes/cells");
 const serve = (port, filename, dir, useProxy) => {
     const app = (0, express_1.default)();
+    app.use((0, cells_1.createCellsRouter)(filename, dir));
     if (useProxy) {
         // If we are running on development mode we get an
         // actual create-react-app server running.
@@ -28,7 +29,6 @@ const serve = (port, filename, dir, useProxy) => {
         // in his machine, so the built files are served up.
         app.use(express_1.default.static(path_1.default.dirname(packagePath)));
     }
-    app.use((0, cells_1.createCellsRouter)(filename, dir));
     return new Promise((resolve, reject) => {
         app.listen(port, resolve).on('error', reject);
     });

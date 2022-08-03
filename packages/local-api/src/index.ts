@@ -11,6 +11,8 @@ export const serve = (
 ) => {
   const app = express();
 
+  app.use(createCellsRouter(filename, dir));
+
   if (useProxy) {
     // If we are running on development mode we get an
     // actual create-react-app server running.
@@ -30,8 +32,6 @@ export const serve = (
     // in his machine, so the built files are served up.
     app.use(express.static(path.dirname(packagePath)));
   }
-
-  app.use(createCellsRouter(filename, dir));
 
   return new Promise<void>((resolve, reject) => {
     app.listen(port, resolve).on('error', reject);

@@ -1,20 +1,20 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 // Reducers
-import cellsReducer, { cellsActions } from './reducers/cellsReducer';
+import cellsReducer from './reducers/cellsReducer';
 import bundlesReducer from './reducers/bundlesReducer';
+
+// Middleware
+import { persistCells } from './middlewares/persistCells';
 
 export const store = configureStore({
   reducer: {
     cells: cellsReducer,
     bundles: bundlesReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(persistCells),
 });
-
-store.dispatch(cellsActions.insertCellAfter({ id: null, type: 'code' }));
-store.dispatch(cellsActions.insertCellAfter({ id: null, type: 'text' }));
-store.dispatch(cellsActions.insertCellAfter({ id: null, type: 'code' }));
-store.dispatch(cellsActions.insertCellAfter({ id: null, type: 'text' }));
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
